@@ -60,7 +60,12 @@ public class FavoriteDatabase extends SQLiteOpenHelper {
     }
     public Cursor getListContents(String title , String description){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE TITLE= '" + title+"WHERE DESCRIPTION = '"+description+ "' ORDER BY ID DESC ", null);
+        String[] columns = {title,description};
+        String orderBy = "COL1 DESC";
+        String table = "TABLE_NAME";
+        Cursor data = db.query(table,columns ,null,null,null,null,orderBy,null);
+
+//        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE TITLE= " + title + "AND WHERE DESCRIPTION = "+description+ " ORDER BY ID DESC ", null);
         return data;
     }
 

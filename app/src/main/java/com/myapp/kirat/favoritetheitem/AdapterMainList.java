@@ -69,12 +69,16 @@ public class AdapterMainList extends RecyclerView.Adapter<AdapterMainList.ViewHo
             @Override
             public void onClick(View v) {
                 favoriteDatabase = new FavoriteDatabase(v.getContext());
-
+                isFavoruite = false;
                 Boolean b = favoriteDatabase.addData(title,des);
                 if(!isFavoruite) {
                     if (b) {
 
-                        Toast.makeText(context, "Added to favourites", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Added to favourites", Toast.LENGTH_SHORT).show();
+                        isFavoruite = true;
+                        Intent intent = new Intent(context,MainActivity.class);
+                        intent.putExtra("title",title);
+                        intent.putExtra("description",des);
                         isFavoruite = true;
                     }
                     else{

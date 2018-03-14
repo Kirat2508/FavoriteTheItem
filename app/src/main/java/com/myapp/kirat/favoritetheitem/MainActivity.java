@@ -24,16 +24,20 @@ public class MainActivity extends AppCompatActivity {
     AdapterMainList Q_ADAPTER;
     FavoriteDatabase favoriteDatabase;
     List<FavouriteModel> favouriteList;
-    String title;
+    String title  ;
     String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        favoriteDatabase = new FavoriteDatabase(this);
         QUERY_VIEW = (RecyclerView) findViewById(R.id.recycler_query);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this.getApplicationContext());
         Log.d("debugMode", "The application stopped after this");
+        Intent intent = getIntent();
+        title = intent.getStringExtra("title");
+        description = intent.getStringExtra("description");
 //        Intent intent = getIntent().getExtras()
 
 
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_fav) {
-            favoriteDatabase = new FavoriteDatabase(this);
+
             Cursor cTemp = favoriteDatabase.getListContents(title,description);
             if (cTemp.moveToNext()) {
                 showFavourites();
