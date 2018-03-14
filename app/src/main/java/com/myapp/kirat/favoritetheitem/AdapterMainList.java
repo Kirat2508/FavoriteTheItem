@@ -21,7 +21,7 @@ import java.util.List;
 public class AdapterMainList extends RecyclerView.Adapter<AdapterMainList.ViewHolder> {
        private List<Message> messageList;
     private Context context;
-    FavoriteDatabase favoriteDatabase ;
+    FavoriteDatabase favoriteDatabase  ;
     Boolean isFavoruite =true;
 
 
@@ -38,6 +38,7 @@ public class AdapterMainList extends RecyclerView.Adapter<AdapterMainList.ViewHo
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.message_list_row, parent, false);
+
         return new ViewHolder(v);
     }
 
@@ -67,6 +68,7 @@ public class AdapterMainList extends RecyclerView.Adapter<AdapterMainList.ViewHo
             String des = holder.DESCRIPTION.getText().toString();
             @Override
             public void onClick(View v) {
+                favoriteDatabase = new FavoriteDatabase(v.getContext());
 
                 Boolean b = favoriteDatabase.addData(title,des);
                 if(!isFavoruite) {

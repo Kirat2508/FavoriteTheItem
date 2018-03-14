@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +22,10 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView QUERY_VIEW;
     List<Message> QUERY_ITEMS;
     AdapterMainList Q_ADAPTER;
-    FavoriteDatabase favoriteDatabase ;
+    FavoriteDatabase favoriteDatabase;
     List<FavouriteModel> favouriteList;
+    String title;
+    String description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,14 +103,35 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_fav) {
-
+            favoriteDatabase = new FavoriteDatabase(this);
+            Cursor cTemp = favoriteDatabase.getListContents(title,description);
+            if (cTemp.moveToNext()) {
+                showFavourites();
+            }
+        } else {
+            Toast.makeText(this, "No Favourites!", Toast.LENGTH_SHORT).show();
         }
-
         return true;
     }
 
+    private void showFavourites() {
 
+        favouriteList.clear();
+        Cursor data ;
+        data = favoriteDatabase.getListContents(title,description);
+        while (data.moveToNext()){
+            favouriteList.add(new FavouriteModel(data.getString(1),data.getString(2)));
+        }
+       FavoriteAdapter cha = new FavoriteAdapter( favouriteList,this) ;
+        cha.notifyDataSetChanged();
+        QUERY_VIEW.setAdapter(cha);
+
+    }
 
 }
+
+
+
+
 
 
